@@ -1,6 +1,26 @@
+# Virtual environment
+venv/
+ENV/
+*.env
+
+# Python cache and bytecode
 __pycache__/
 *.py[cod]
-.env
+
+# SQLite database files
 *.sqlite3
-.DS_Store
+
+# Logs and temporary files
 *.log
+*.tmp
+*.bak
+
+# IDE settings (optional, depending on your IDE)
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+
+# Specific migration cache (optional if needed)
+migrations/__pycache__/
