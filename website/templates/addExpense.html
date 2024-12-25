@@ -3,5 +3,30 @@
 {% block title %} Expense Tracker - Add Expense {% endblock %}
 
 {% block content %}
-    <h1> This is the Add Expense Form Page.</h1>
+    <div class="jumbotron">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.expense_name.label(class="form-label") }}
+                {{ form.expense_name(class="form-control") }}
+            </div>
+            <div>
+                {{ form.expense_amount.label(class="form-label") }}
+                {{ form.expense_amount(class="form-control") }}
+            </div>
+            <div>
+                {{ form.expense_category.label(class="form-label") }}
+                {{ form.expense_category(class="form-control") }}
+            </div>
+            <div>
+                {{ form.description.label(class="form-label") }}
+                {{ form.description(class="form-control") }}
+            </div>
+            <br/>
+            <div>
+                {{ form.submit_button(class="btn btn-primary") }}
+                <a type="button" class="btn btn-danger" href="/dashboard">Cancel</a>
+            </div>
+        </form>
+    </div>
 {% endblock %}

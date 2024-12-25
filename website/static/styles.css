@@ -140,9 +140,13 @@ p a:hover{
     cursor: pointer;
     transition: 0.3s ease all;
     font-size: large;
-    padding: 10px;
+    text-align: center; /* Horizontally align text */
+    line-height: 50px; /* Vertically align text */
+    padding: 0; /* Remove padding to ensure proper alignment */
 }
 
 .main-container .menu-buttons:hover{
     background-color: #0056b3;
+    text-decoration: none;
+    color: #fff;
 }

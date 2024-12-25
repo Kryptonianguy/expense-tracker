@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_wtf.csrf import CSRFProtect
 import os
 
 db = SQLAlchemy()
@@ -14,6 +15,8 @@ DB_NAME = os.path.join(basedir, "expense_tracker.db")
 
 def create_app():
     app = Flask(__name__)
+
+    # csrf = CSRFProtect(app)
 
     # App configuration
     app.config['SECRET_KEY'] = 'asderdsads'
