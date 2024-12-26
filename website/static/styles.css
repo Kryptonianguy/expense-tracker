@@ -150,3 +150,38 @@ p a:hover{
     text-decoration: none;
     color: #fff;
 }
+
+/* CSS for Add Expense Form */
+.jumbotron{
+    background-color: #f7f7f7 !important;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    width: 550px;
+    height: auto;
+    align-items: center;
+}
+
+@media (min-width: 576px) {
+    .jumbotron {
+        padding: 2rem 2rem !important; /* Overrides Bootstrap's default for larger screens */
+    }
+}
+
+.form-control{
+    margin-bottom: 2px !important;
+}
+
+.add-expense-form-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.custom-save-btn {
+    background-color: #333 !important;
+    color: #fff !important;
+}
+
+.add-expense-form-buttons .custom-save-btn:hover{
+    background-color: #575757 !important;
+}
