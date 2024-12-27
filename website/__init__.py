@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from flask_wtf.csrf import CSRFProtect
+# from flask_wtf.csrf import CSRFProtect
 import os
 
 db = SQLAlchemy()
@@ -33,7 +33,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/')
 
     # Import models and create the database
-    from .models import User
+    from .models import User, Expense
 
     create_database(app)
 
