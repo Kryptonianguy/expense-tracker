@@ -27,6 +27,7 @@ def add_expense():
             expense_name = form.expense_name.data,
             expense_amount = form.expense_amount.data,
             expense_category = form.expense_category.data,
+            expense_date = form.expense_date.data,
             description = form.description.data,
             user_id = current_user.id
         )
@@ -37,7 +38,9 @@ def add_expense():
         # Handle the form submission (e.g., save to the database)
         flash('Expense added successfully!', 'success')
         return redirect(url_for('routes.add_expense'))
-    return render_template('addExpense.html', user = current_user, form=form)
+    elif form.errors:
+        flash(form.errors, category='error')
+    return render_template('addExpense.html', user = current_user, form = form)
 
 @routes.route('/view-expense')
 @login_required

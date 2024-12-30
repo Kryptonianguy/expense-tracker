@@ -1,6 +1,7 @@
 from . import db
 from flask_login import UserMixin
-from datetime import datetime, timezone
+from datetime import date
+from sqlalchemy.sql import func
 
 class User(db.Model, UserMixin):
     __tablename__ = 'User'
@@ -9,8 +10,8 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(150), unique=True, nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150))
-    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
-    updated_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
+    created_at = db.Column(db.DateTime, default=func.now())  # Use func.now()
+    updated_at = db.Column(db.DateTime, default=func.now(), onupdate=func.now())
 
     def __init__(self, first_name, email, password):
         self.first_name = first_name
@@ -24,14 +25,16 @@ class Expense(db.Model):
     expense_name = db.Column(db.String(80), nullable=False)
     expense_amount = db.Column(db.Float, nullable=False)
     expense_category = db.Column(db.String(50), nullable=False)
+    expense_date = db.Column(db.Date, nullable=False)
     description = db.Column(db.String(150), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
-    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
-    updated_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
+    created_at = db.Column(db.DateTime, default=func.now())  # Use func.now()
+    updated_at = db.Column(db.DateTime, default=func.now(), onupdate=func.now())
 
-    def __init__(self, expense_name, expense_amount, expense_category, description, user_id):
+    def __init__(self, expense_name, expense_amount, expense_category, expense_date, description, user_id):
         self.expense_name = expense_name
         self.expense_amount = expense_amount
         self.expense_category = expense_category
+        self.expense_date = expense_date
         self.description = description
         self.user_id = user_id
