@@ -39,10 +39,17 @@ def add_expense():
         flash('Expense added successfully!', 'success')
         return redirect(url_for('routes.add_expense'))
     elif form.errors:
-        flash(form.errors, category='error')
+        error_messages = []
+        for messages in form.errors.values():
+            for message in messages:
+                error_messages.append(message)
+
+        for message in error_messages:
+            flash(message, category='error')
     return render_template('addExpense.html', user = current_user, form = form)
 
 @routes.route('/view-expense')
 @login_required
 def view_expense():
-    return render_template('viewExpense.html', user = current_user)
+    expenses = Expense.query.filter_by(user_id=current_user.id).all()
+    return render_template('viewExpense.html', user = current_user, expenses = expenses)

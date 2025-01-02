@@ -8,7 +8,7 @@ class AddExpenseForm(FlaskForm):
 
     def validExpenseDate(form, field):
         if field.data > date.today():
-            raise ValidationError('Expense date cannot be in the future')
+            raise ValidationError('Expense date cannot be in the future.')
 
     expense_name = StringField('Expense Name', validators=[DataRequired(), Length(max=80)])
     expense_amount = FloatField('Amount', validators=[DataRequired(), NumberRange(min=0)])
