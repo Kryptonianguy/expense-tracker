@@ -151,7 +151,7 @@ p a:hover{
     color: #fff;
 }
 
-/* CSS for Add Expense Form */
+/* CSS for Add Expense Form and View Expense Page*/
 .jumbotron{
     background-color: #f7f7f7 !important;
     box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
@@ -170,7 +170,7 @@ p a:hover{
     margin-bottom: 2px !important;
 }
 
-.add-expense-form-buttons{
+.add-expense-form-buttons, .view-expense-page-buttons{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -183,5 +183,27 @@ p a:hover{
 }
 
 .add-expense-form-buttons .custom-save-btn:hover{
+    background-color: #575757 !important;
+}
+
+.view-expense-page-container{
+    background-color: #f7f7f7;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    width: 1180px;
+    height: auto;
+    text-align: left;
+    padding: 10px 0 0 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 2px solid black;
+    /* display: none; */
+}
+
+.view-expense-page-container ul{
+    list-style: none;
+}
+
+.view-expense-page-buttons .custom-save-btn:hover{
     background-color: #575757 !important;
 }

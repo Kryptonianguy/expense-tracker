@@ -3,7 +3,31 @@
 {% block title %} Expense Tracker - Add Expense {% endblock %}
 
 {% block content %}
-    
-        <button class="btn btn-primary">Show Expenses</button>
-    
+    <div class="view-expense-page-buttons">
+        <button class="btn custom-save-btn" onclick="toggleExpenses()">Show Expenses</button>
+        <a type="button" class="btn btn-danger" href="/dashboard">Back</a>
+    </div>
+    <br/>
+    <div id="expense-list" class="view-expense-page-container" style="display: none;">
+        <ul>
+            {% for expense in expenses %}
+            <li>
+                {{ loop.index }}.Expense-name= {{ expense.expense_name }}, Amount= {{ expense.expense_amount }} Rs., 
+                Category= {{ expense.expense_category }}, Date= {{ expense.expense_date.strftime('%d-%m-%Y') }}, Description= {{ expense.description }}
+            </li>
+            <i class="fa-solid fa-pen"></i>
+            <a href="#" style="text-decoration: none;">Update</a>
+            |
+            <i class="fa-solid fa-trash"></i>
+            <a href="#" style="text-decoration: none;">Delete</a>
+            <br/>
+            {% endfor %}
+        </ul>
+    </div>
+    <script>
+        function toggleExpenses() {
+            const expenseList = document.getElementById('expense-list');
+            expenseList.style.display = expenseList.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
 {% endblock %}
