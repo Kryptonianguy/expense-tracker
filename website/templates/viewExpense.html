@@ -15,14 +15,25 @@
                 {{ loop.index }}.Expense-name= {{ expense.expense_name }}, Amount= {{ expense.expense_amount }} Rs., 
                 Category= {{ expense.expense_category }}, Date= {{ expense.expense_date.strftime('%d-%m-%Y') }}, Description= {{ expense.description }}
             </li>
-            <i class="fa-solid fa-pen"></i>
-            <a href="#" style="text-decoration: none;">Update</a>
+            <a href="/update-expense" style="text-decoration: none;">
+                <i class="fa-solid fa-pen"></i>
+                Update
+            </a>
             |
-            <i class="fa-solid fa-trash"></i>
-            <a href="#" style="text-decoration: none;">Delete</a>
+            <a href="#" style="text-decoration: none;">
+                <i class="fa-solid fa-trash"></i>
+                Delete
+            </a>
             <br/>
             {% endfor %}
         </ul>
+    </div>
+    <br/>
+    <div>
+        <button class="custom-download-btn">
+            Download
+            <i class="fa-solid fa-download" style="color: #fff;"></i>
+        </button>
     </div>
     <script>
         function toggleExpenses() {

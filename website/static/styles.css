@@ -207,3 +207,26 @@ p a:hover{
 .view-expense-page-buttons .custom-save-btn:hover{
     background-color: #575757 !important;
 }
+
+i{
+    color: #333;
+}
+
+i:hover{
+    cursor: pointer;
+    color: red;
+    transition: 0.1s ease all;
+    }
+
+.custom-download-btn{
+    background-color: #333 !important;
+    color: #fff;
+    width: 115px;
+    height: 35px;
+    border-radius: 0.25rem;
+}
+
+.custom-download-btn:hover{
+    background-color: #575757 !important;
+    transition: 0.3s ease all;
+}

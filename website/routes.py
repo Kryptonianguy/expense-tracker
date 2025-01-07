@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, flash, redirect, url_for
 from flask_login import login_required, current_user
-from .forms import AddExpenseForm
+from .forms import AddExpenseForm, UpdateExpenseForm
 from .models import Expense
 from . import db
 
@@ -53,3 +53,34 @@ def add_expense():
 def view_expense():
     expenses = Expense.query.filter_by(user_id=current_user.id).all()
     return render_template('viewExpense.html', user = current_user, expenses = expenses)
+
+@routes.route('/update-expense', methods=['GET', 'POST'])
+@login_required
+def update_expense():
+    form = UpdateExpenseForm()
+    if form.validate_on_submit():
+        # Creating an Expense instance and save it to the database
+        updated_expense = Expense(
+            expense_name = form.expense_name.data,
+            expense_amount = form.expense_amount.data,
+            expense_category = form.expense_category.data,
+            expense_date = form.expense_date.data,
+            description = form.description.data,
+            user_id = current_user.id
+        )
+
+        db.session.add(updated_expense)
+        db.session.commit()
+
+        # Handle the form submission (e.g., save to the database)
+        flash('Expense updated successfully!', 'success')
+        return redirect(url_for('routes.view_expense'))
+    elif form.errors:
+        error_messages = []
+        for messages in form.errors.values():
+            for message in messages:
+                error_messages.append(message)
+
+        for message in error_messages:
+            flash(message, category='error')
+    return render_template('updateExpense.html', user = current_user, form = form)
