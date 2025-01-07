@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash, redirect, url_for
+from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
 from .forms import AddExpenseForm, UpdateExpenseForm
 from .models import Expense
@@ -54,33 +54,31 @@ def view_expense():
     expenses = Expense.query.filter_by(user_id=current_user.id).all()
     return render_template('viewExpense.html', user = current_user, expenses = expenses)
 
-@routes.route('/update-expense', methods=['GET', 'POST'])
+@routes.route('/update-expense/<int:id>', methods=['GET', 'POST'])
 @login_required
-def update_expense():
+def update_expense(id):
     form = UpdateExpenseForm()
-    if form.validate_on_submit():
-        # Creating an Expense instance and save it to the database
-        updated_expense = Expense(
-            expense_name = form.expense_name.data,
-            expense_amount = form.expense_amount.data,
-            expense_category = form.expense_category.data,
-            expense_date = form.expense_date.data,
-            description = form.description.data,
-            user_id = current_user.id
-        )
+    updateExpense = Expense.query.get_or_404(id)
 
-        db.session.add(updated_expense)
-        db.session.commit()
+    if request.method == "POST" and form.validate_on_submit():
+        # Update the fields with form data
+        updateExpense.expense_name = form.expense_name.data
+        updateExpense.expense_amount = form.expense_amount.data
+        updateExpense.expense_category = form.expense_category.data
+        updateExpense.expense_date = form.expense_date.data
+        updateExpense.description = form.description.data
+        try:
+            db.session.commit()
+            flash('Expense Updated Successfully.', category='success')
+            return redirect(url_for('routes.view_expense'))
+        except Exception as e:
+            return str(e)
+    else:
+        # Populate form with current expense data on GET
+        form.expense_name.data = updateExpense.expense_name
+        form.expense_amount.data = updateExpense.expense_amount
+        form.expense_category.data = updateExpense.expense_category
+        form.expense_date.data = updateExpense.expense_date
+        form.description.data = updateExpense.description
 
-        # Handle the form submission (e.g., save to the database)
-        flash('Expense updated successfully!', 'success')
-        return redirect(url_for('routes.view_expense'))
-    elif form.errors:
-        error_messages = []
-        for messages in form.errors.values():
-            for message in messages:
-                error_messages.append(message)
-
-        for message in error_messages:
-            flash(message, category='error')
-    return render_template('updateExpense.html', user = current_user, form = form)
+    return render_template('updateExpense.html', user=current_user, form=form, updateExpense=updateExpense)

@@ -15,7 +15,7 @@
                 {{ loop.index }}.Expense-name= {{ expense.expense_name }}, Amount= {{ expense.expense_amount }} Rs., 
                 Category= {{ expense.expense_category }}, Date= {{ expense.expense_date.strftime('%d-%m-%Y') }}, Description= {{ expense.description }}
             </li>
-            <a href="/update-expense" style="text-decoration: none;">
+            <a href="/update-expense/{{expense.id}}" style="text-decoration: none;">
                 <i class="fa-solid fa-pen"></i>
                 Update
             </a>
