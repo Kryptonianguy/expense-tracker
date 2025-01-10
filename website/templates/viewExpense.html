@@ -3,42 +3,71 @@
 {% block title %} Expense Tracker - Add Expense {% endblock %}
 
 {% block content %}
-    <div class="view-expense-page-buttons">
-        <button class="btn custom-save-btn" onclick="toggleExpenses()">Show Expenses</button>
-        <a type="button" class="btn btn-danger" href="/dashboard">Back</a>
+<div class="view-expense-page-buttons">
+    <button class="btn custom-save-btn" onclick="toggleExpenses()">Show Expenses</button>
+    <a type="button" class="btn btn-danger" href="/dashboard">Back</a>
+</div>
+<br />
+<div id="expense-list" class="view-expense-page-container" style="display: none;">
+    <ul>
+        {% for expense in expenses %}
+        <li>
+            {{ loop.index }}.Expense-name= {{ expense.expense_name }}, Amount= {{ expense.expense_amount }} Rs.,
+            Category= {{ expense.expense_category }}, Date= {{ expense.expense_date.strftime('%d-%m-%Y') }}, Description= {{ expense.description }}
+        </li>
+        <a href="/update-expense/{{ expense.id }}" style="text-decoration: none;">
+            <i class="fa-solid fa-pen"></i> Update
+        </a>
+        |
+        <a href="#" class="open-button" data-id="{{ expense.id }}" style="text-decoration: none;">
+            <i class="fa-solid fa-trash"></i> Delete
+        </a>
+        <br />
+        {% endfor %}
+    </ul>
+</div>
+<br />
+<div>
+    <button class="custom-download-btn">
+        Download
+        <i class="fa-solid fa-download" style="color: #fff;"></i>
+    </button>
+</div>
+
+<!-- Modal HTML -->
+<dialog id="modal" class="random">
+    <h2>Delete Expense</h2>
+    <p>Are you sure you want to delete this expense?</p>
+    <div class="random_buttons">
+        <form id="delete-form" method="POST">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+        <button class="btn btn-primary close-button">Cancel</button>
     </div>
-    <br/>
-    <div id="expense-list" class="view-expense-page-container" style="display: none;">
-        <ul>
-            {% for expense in expenses %}
-            <li>
-                {{ loop.index }}.Expense-name= {{ expense.expense_name }}, Amount= {{ expense.expense_amount }} Rs., 
-                Category= {{ expense.expense_category }}, Date= {{ expense.expense_date.strftime('%d-%m-%Y') }}, Description= {{ expense.description }}
-            </li>
-            <a href="/update-expense/{{expense.id}}" style="text-decoration: none;">
-                <i class="fa-solid fa-pen"></i>
-                Update
-            </a>
-            |
-            <a href="#" style="text-decoration: none;">
-                <i class="fa-solid fa-trash"></i>
-                Delete
-            </a>
-            <br/>
-            {% endfor %}
-        </ul>
-    </div>
-    <br/>
-    <div>
-        <button class="custom-download-btn">
-            Download
-            <i class="fa-solid fa-download" style="color: #fff;"></i>
-        </button>
-    </div>
-    <script>
-        function toggleExpenses() {
-            const expenseList = document.getElementById('expense-list');
-            expenseList.style.display = expenseList.style.display === 'none' ? 'block' : 'none';
-        }
-    </script>
+</dialog>
+
+<script>
+    function toggleExpenses() {
+        const expenseList = document.getElementById('expense-list');
+        expenseList.style.display = expenseList.style.display === 'none' ? 'block' : 'none';
+    }
+
+    const modal = document.querySelector("#modal");
+    const closeModal = document.querySelector(".close-button");
+    const deleteForm = document.querySelector("#delete-form");
+    const deleteLinks = document.querySelectorAll(".open-button");
+
+    deleteLinks.forEach(link => {
+        link.addEventListener("click", (event) => {
+            event.preventDefault();
+            const expenseId = link.dataset.id;
+            deleteForm.action = `/delete-expense/${expenseId}`;
+            modal.showModal();
+        });
+    });
+
+    closeModal.addEventListener("click", () => {
+        modal.close();
+    });
+</script>
 {% endblock %}

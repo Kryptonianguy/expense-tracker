@@ -82,3 +82,18 @@ def update_expense(id):
         form.description.data = updateExpense.description
 
     return render_template('updateExpense.html', user=current_user, form=form, updateExpense=updateExpense)
+
+@routes.route('/delete-expense/<int:id>', methods=['POST'])
+@login_required
+def delete_expense(id):
+    deletExpense = Expense.query.get_or_404(id)
+
+    try:
+        db.session.delete(deletExpense)
+        db.session.commit()
+        flash('Expense Deleted Successfully.', category='success')
+        return redirect(url_for('routes.view_expense'))
+    except Exception as e:
+        return flash(str(e), category='error')
+
+    # return render_template('deleteModal.html', user = current_user, deletExpense = deletExpense)

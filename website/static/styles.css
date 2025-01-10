@@ -11,6 +11,7 @@ body{
     flex-direction: column;
     height: 100vh; */
     margin: 0;
+    /* background-color: rgb(129, 129, 129) !important; */
 }
 
 /* CSS for Navbar starts here*/
@@ -229,4 +230,37 @@ i:hover{
 .custom-download-btn:hover{
     background-color: #575757 !important;
     transition: 0.3s ease all;
+}
+
+/* Delete Modal CSS */
+.random{
+    background-color: #333;
+    color: #fff;
+    z-index: 2000;
+    width: 25vw;
+    height: 23vh;
+    padding: 13px;
+    border: 1px solid black;
+    border-radius: 5px;
+    position: relative;
+    top: 39%;
+    left: 39%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(0.9);
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+/* Modal Visible Animation */
+.random.show {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Modal Buttons */
+.random_buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
 }
