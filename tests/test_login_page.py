@@ -15,7 +15,7 @@ def get_existing_user():
     return user
 
 # Setup fixture to check login page accessibility
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def setup_method():
     print("Setting up the Environment")
     url = "http://127.0.0.1:5000/login"
@@ -73,17 +73,32 @@ def test_login_with_invalid_password(client):
     else:
         pytest.fail("Test setup issue: input_password should not match the stored password")
 
+"""TC004 - Function to test Login with unregistered email."""
+def test_login_with_unregistered_email(client):
+    unregistered_email_id = "testuser@use.com"
+    input_password = "Pass123"
+
+    response = client.post("/login", data={"email": unregistered_email_id, "password": input_password})
+    assert response.status_code == 200
+
+"""TC005 - Function to Test Login with Empty Spaces"""
+def test_login_with_empty_fields(client):
+    user_email = " "  # Simulating user submitting only spaces
+    user_password = " "
+
+    response = client.post("/login", data={"email": user_email, "password": user_password})
+
+    assert response.status_code == 200
+
+"""TC006 - Function to Test Login with SQL Injection"""
+def test_login_with_sql_injection(client):
+    input_email_id = "' OR 1=1 --"
+    input_password = "123"
+
+    response = client.post("/login", data={"email": input_email_id, "password": input_password})
+    assert response.status_code == 200
+
 # Teardown fixture
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def teardown_method():
     print("Tearing down the test Environment")
-
-
-# def test_login_with_unregistered_email():
-#     pass
-
-# def test_login_with_empty_fields():
-#     pass
-#
-# def test_login_with_sql_injection():
-#     pass
